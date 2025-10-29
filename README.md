@@ -24,8 +24,8 @@ The goal is to validate API responses, error handling, and session/context manag
 
 ### 1️⃣ Clone the Repository
 ```bash
-git clone https://github.com/<your-username>/ai-mcp-api-tests.git
-cd ai-mcp-api-tests
+git clone https://github.com/diviam021-bit/Postman-API-Testing-Collection.git
+cd Postman-API-Testing-Collection
 
 ### 2️⃣ Install Dependencies
 npm install
