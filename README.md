@@ -1,48 +1,67 @@
-# 🧠 AI → MCP → API Workflow Testing (Node.js + Postman)
+# 🚀 AI → MCP → API Workflow Testing Collection (with Gemini 2.5 Flash)
 
-This project provides a **Postman API Testing Collection** and a **Node.js mock server** to simulate an internal **AI → MCP → API workflow**.  
-The goal is to validate API responses, error handling, and session/context management for AI-driven DevOps automation.
-
----
-
-## 🚀 Features
-
-- Mock API built with **Node.js + Express**
-
-- **5 Core Endpoints** covering AI and MCP interactions
-- Postman tests for:
-  - ✅ Valid Requests
-  - ❌ Invalid Requests
-  - 🔄 Session Handling
-  - 🧩 Edge Cases (including missing `session_id`)
-- Reusable Postman environment setup
+This project demonstrates an end-to-end **Postman API testing workflow** for an internal AI agent that generates code snippets and DevOps configuration suggestions via an MCP server.  
+It uses **Google Gemini** (free API) for dynamic AI responses and provides endpoints to simulate session handling, AI prompts, MCP operations, and validation.
 
 ---
 
+## 📘 Features
+- **Live AI responses** from Gemini
+- **Session management** (`start`, `end`)
+- **AI prompt handling** (`/api/ai/query`)
+- **MCP workflow simulation** (`/api/mcp/generate`, `/api/mcp/validate`)
 
-## ⚙️ Setup Instructions
+- **Reusable Postman collection** for future automation & regression testing
 
-### 1️⃣ Clone the Repository
+- Includes **schema-based Postman tests** and **error-handling cases**
+
+
+---
+
+## ⚙️ Technologies
+- **Node.js + Express** → REST API mock server  
+- **Axios** → external Gemini API calls  
+- **uuid** → unique session handling (for creating session id)  
+- **dotenv** → environment variable management  
+- **Postman** → API testing & automation  
+
+---
+
+## 🔑 Prerequisites
+1. [Install Node.js](https://nodejs.org/en/download/)
+2. [Sign up for Google AI Studio](https://aistudio.google.com/)
+3. Create a **Gemini API key** →  
+   [https://aistudio.google.com/app/apikey](https://aistudio.google.com/app/apikey)
+
+---
+
+## 🧩 Installation
+
 ```bash
+# Clone repository
 git clone https://github.com/diviam021-bit/Postman-API-Testing-Collection.git
 cd Postman-API-Testing-Collection
 
-### 2️⃣ Install Dependencies
+# Install dependencies
 npm install
 
-### 3️⃣ Run the Mock API Server
-npm start
 
-###  Postman Setup
-1️⃣ Import Files into Postman
+Create a .env file in the root directory:
 
-Go to Postman → File → Import and import:
+GEMINI_API_KEY=your_gemini_api_key_here
+PORT=4000
 
-- postman/Agent-Api-Workflow-Collection.postman_collection.json
+Start the server:
 
-- postman/Local Environment.postman_environment.json
-
--- For each Request, Documentation added in Postman.
+node server.js
 
 
+- -  How to Use Postman collection
 
+- Open Postman
+
+- Go to Environments → Import
+
+- Select this file:
+--- postman/Agent-Api-Workflow-Collection.postman_collection.json
+--- postman/Local Environment.postman_environment.json
