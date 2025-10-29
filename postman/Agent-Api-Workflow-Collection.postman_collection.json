@@ -1,0 +1,232 @@
+{
+	"info": {
+		"_postman_id": "4fa36b94-8558-4063-92ae-d61d8d936602",
+		"name": "Agent-Api-Workflow-Collection",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "49607440",
+		"_collection_link": "https://diviam021-2820870.postman.co/workspace/1596bb5b-4c3d-473f-8448-04a1432f8ca3/collection/49607440-4fa36b94-8558-4063-92ae-d61d8d936602?action=share&source=collection_link&creator=49607440"
+	},
+	"item": [
+		{
+			"name": "New Request",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"const res = pm.response.json();\r",
+							"pm.test(\"Status code is 200\", () => pm.response.to.have.status(200));\r",
+							"pm.test(\"Session ID exists\", () => pm.expect(res.session_id).to.exist);\r",
+							"pm.test(\"Session ID is not empty\", () => pm.expect(res.session_id).to.not.be.empty);\r",
+							"if (res.session_id) {\r",
+							"    pm.environment.set(\"session_id\", res.session_id);\r",
+							"} else {\r",
+							"    pm.test(\"Session ID missing\", () => {\r",
+							"        throw new Error(\"Expected 'session_id' is not found in response\");\r",
+							"    });\r",
+							"}\r",
+							""
+						],
+						"type": "text/javascript",
+						"packages": {},
+						"requests": {}
+					}
+				}
+			],
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\"user\": \"User test\"}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{base_url}}/api/session/start",
+					"host": [
+						"{{base_url}}"
+					],
+					"path": [
+						"api",
+						"session",
+						"start"
+					]
+				},
+				"description": "Starts a new user session for the AI → MCP workflow.\n\n**Purpose:**  \nInitialize a unique session that maintains context across AI and MCP API calls.\n\n**Request Body Example:**  \n{  \n\"user\": \"User test\"  \n}\n\n**Expected Response:**  \n{  \n\"session_id\": \"sess_abc123\",  \n\"message\": \"session started successfully\"  \n}"
+			},
+			"response": []
+		},
+		{
+			"name": "New Request",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"const json = pm.response.json();\r",
+							"pm.test(\"Status 200\", () => pm.response.to.have.status(200));\r",
+							"pm.test(\"Contains output\", () => {\r",
+							"    pm.expect(json).to.have.property(\"output\");\r",
+							"});\r",
+							"pm.test(\"error message\", () => {\r",
+							"    const json = pm.response.json();\r",
+							"    pm.expect(json).to.have.property(\"error\");\r",
+							"});\r",
+							""
+						],
+						"type": "text/javascript",
+						"packages": {},
+						"requests": {}
+					}
+				}
+			],
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{ \"prompt\": \"how to generate test file\" }",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{base_url}}/api/query",
+					"host": [
+						"{{base_url}}"
+					],
+					"path": [
+						"api",
+						"query"
+					]
+				},
+				"description": "Sends a DevOps-related prompt to the internal AI agent.\n\n**Purpose:**  \nTest the AI agent's ability to process a user query and return generated suggestions.\n\n**Request Body Example:**  \n{  \n\"prompt\": \"how to generate test file\"  \n}\n\n**Expected Response:**  \n{  \n\"output\": \"Generated suggestions for: Generate test file  \n}\n\n**Error Case:**  \nMissing 'prompt' field should return a 400 error with an error message."
+			},
+			"response": []
+		},
+		{
+			"name": "New Request",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"const res = pm.response.json();\r",
+							"pm.test(\"Status 200\", () => pm.response.to.have.status(200));\r",
+							"pm.test(\"Validation successful\", () => {\r",
+							"    pm.expect(res.valid).to.eql(true);\r",
+							"});\r",
+							""
+						],
+						"type": "text/javascript",
+						"packages": {},
+						"requests": {}
+					}
+				}
+			],
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{ \"config\": \"apiVersion: v1\" }",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{base_url}}/api/validate",
+					"host": [
+						"{{base_url}}"
+					],
+					"path": [
+						"api",
+						"validate"
+					]
+				},
+				"description": "Validates generated configuration syntax or structure.\n\n**Purpose:**  \nEnsure that generated configurations meets with the expected validation criteria.\n\n**Request Body Example:**  \n{  \n\"config\": \"apiVersion: v1\"  \n}\n\n**Expected Response:**  \n{  \n\"valid\": true,  \n\"message\": \"Configuration validated successfully\"  \n}\n\n**Error Case:**  \nIf configuration contains the word 'error', the API returns a 422 with validation failure."
+			},
+			"response": []
+		},
+		{
+			"name": "New Request",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"const res = pm.response.json();\r",
+							"pm.test(\"Status 200\", () => pm.response.to.have.status(200));\r",
+							"pm.test(\"Session ended\", () => {\r",
+							"    pm.expect(res.message).to.include(\"ended\");\r",
+							"});\r",
+							"\r",
+							""
+						],
+						"type": "text/javascript",
+						"packages": {},
+						"requests": {}
+					}
+				}
+			],
+			"request": {
+				"method": "DELETE",
+				"header": [],
+				"url": {
+					"raw": "{{base_url}}/api/session/{{session_id}}",
+					"host": [
+						"{{base_url}}"
+					],
+					"path": [
+						"api",
+						"session",
+						"{{session_id}}"
+					]
+				},
+				"description": "Ends or clears the active session context.\n\n**Purpose:**  \nClean up session state to ensure proper session lifecycle management.\n\n**URL Example:**  \nDELETE /api/session/{{session_id}}\n\n**Expected Response:**  \n{  \n\"message\": \"Session ended successfully\"  \n}\n\n**Error Case:**  \nIf session ID not found, expect a 404 with an error message."
+			},
+			"response": []
+		},
+		{
+			"name": "New Request",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"description": "Generates a configuration or code snippet through the MCP (Model Control Plane).\n\n**Purpose:**  \nValidate MCP’s ability to create DevOps configurations using active session context.\n\n**Request Body Example:**  \n{  \n\"session_id\": \"{{session_id}}\",  \n\"task\": \"generate or create code for basic node js server\"  \n}\n\n**Expected Response:**  \n{  \n\"output\": \"code or script generated for : generate or create code for basic node js server\"  \n}\n\n**Error Case:**  \nIf 'session_id' is invalid or missing, expect 401 Unauthorized."
+			},
+			"response": []
+		}
+	],
+	"event": [
+		{
+			"listen": "prerequest",
+			"script": {
+				"type": "text/javascript",
+				"packages": {},
+				"requests": {},
+				"exec": [
+					""
+				]
+			}
+		},
+		{
+			"listen": "test",
+			"script": {
+				"type": "text/javascript",
+				"packages": {},
+				"requests": {},
+				"exec": [
+					""
+				]
+			}
+		}
+	]
+}
