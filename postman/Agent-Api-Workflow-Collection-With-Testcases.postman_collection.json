@@ -81,7 +81,7 @@
 						"start"
 					]
 				},
-				"description": "Starts a new user session for the AI → MCP workflow.\n\n**Purpose:**  \nInitialize a unique session that maintains context across AI and MCP API calls.\n\n**Request Body Example:**  \n{  \n\"user\": \"User test\"  \n}\n\n**Expected Response:**  \n{  \n\"session_id\": \"sess_abc123\",  \n\"message\": \"session started successfully,you can start AI communication\"  \n}"
+				"description": "Starts a new user session for the AI → MCP workflow.\n\n**Purpose:**  \nInitialize a unique session that maintains context across AI and MCP API calls.\n\n**Request Body Example:**  \n{  \n\"user\": \"User test\"  \n}\n\n**Expected Response:**  \n{  \n\"session_id\": \"3a08eeec-331b-4a4b-81c3-7bb60274b418\",  \n\"message\": \"session started successfully,you can start AI communication\"  \n}"
 			},
 			"response": []
 		},
@@ -132,7 +132,7 @@
 				"header": [],
 				"body": {
 					"mode": "raw",
-					"raw": "{\r\n  \"session_id\": \"3a08eeec-331b-4a4b-81c3-7bb60274b418\",\r\n  \"prompt\": \"generate a start code of node.js\"\r\n}\r\n",
+					"raw": "{\r\n  \"session_id\": \"{{session_id}}\",\r\n  \"prompt\": \"generate a start code of node.js\"\r\n}\r\n",
 					"options": {
 						"raw": {
 							"language": "json"
@@ -149,7 +149,7 @@
 						"query"
 					]
 				},
-				"description": "Sends a DevOps-related prompt to the internal AI agent.\n\n**Purpose:**  \nTest the AI agent's ability to process a user query and return generated suggestions.\n\n**Request Body Example:**  \n{  \n\"prompt\": \"generate a start code of node.js\"  \n}\n\n**Expected Response:**  \n{\n\nprompt,  \n\"output\": static generated response  \n}\n\n**Error Case:**  \nMissing 'prompt' field should return a 400 error with an error message."
+				"description": "Sends a DevOps-related prompt to the internal AI agent.\n\n**Purpose:**  \nTest the AI agent's ability to process a user query and return generated suggestions.\n\n**Request Body Example:**  \n{\n\n\"session_id\": \"{{session_id}}\",  \n\"prompt\": \"generate a start code of node.js\"  \n}\n\n**Expected Response:**  \n{\n\nprompt,  \noutput,\n\nmessage  \n}\n\n**Error Case:**  \nMissing 'prompt' field should return a 400 error with an error message."
 			},
 			"response": []
 		},
@@ -216,7 +216,7 @@
 						"generate"
 					]
 				},
-				"description": "Generates a configuration or code snippet through the MCP (Model Control Plane).\n\n**Purpose:**  \nValidate MCP’s ability to create DevOps configurations using active session context.\n\n**Request Body Example:**  \n{  \n\"session_id\": \"{{session_id}}\",  \n\"task\": \"Create config for NGINX\"  \n}\n\n**Expected Response:**  \n{  \n\"output\": \"code or script generated for : generate or create code for basic node js server\"  \n}\n\n**Error Case:**  \nIf 'session_id' is invalid or missing, expect 401 Unauthorized."
+				"description": "Generates a configuration or code snippet through the MCP (Model Control Plane).\n\n**Purpose:**  \nValidate MCP’s ability to create DevOps configurations using active session context.\n\n**Request Body Example:**  \n{  \n\"session_id\": \"{{session_id}}\",  \n\"task\": \"Create config for NGINX\"  \n}\n\n**Expected Response:**  \n{\n\ntask,  \noutput,\n\nmessage  \n}\n\n**Error Case:**  \nIf 'session_id' is invalid or missing, expect 401 Unauthorized."
 			},
 			"response": []
 		},
@@ -265,7 +265,7 @@
 				"header": [],
 				"body": {
 					"mode": "raw",
-					"raw": "{ \"config\": \"apiVersion: v1\" }",
+					"raw": "{\"session_id\": \"{{session_id}}\",\"data\": { \"app\": \"node\", \"port\": 4000 } }",
 					"options": {
 						"raw": {
 							"language": "json"
@@ -282,7 +282,7 @@
 						"validate"
 					]
 				},
-				"description": "Validates generated configuration syntax or structure.\n\n**Purpose:**  \nEnsure that generated configurations meets with the expected validation criteria.\n\n**Request Body Example:**  \n{  \n\"config\": \"apiVersion: v1\"  \n}\n\n**Expected Response:**  \n{  \n\"valid\": true,  \n\"message\": \"Configuration validated successfully\"  \n}\n\n**Error Case:**  \nIf configuration contains the word 'error', the API returns a 422 with validation failure."
+				"description": "Validates generated configuration syntax or structure.\n\n**Purpose:**  \nEnsure that generated configurations meets with the expected validation criteria.\n\n**Request Body Example:**  \n{\"session_id\": \"{{session_id}}\",\"data\": { \"app\": \"node\", \"port\": 4000 } }\n\n**Expected Response:**  \n{  \n\"valid\": true,  \n\"message\": \"Configuration validated successfully\"  \n}\n\n**Error Case:**  \nIf configuration contains the word 'error', the API returns a 422 with validation failure."
 			},
 			"response": []
 		},
