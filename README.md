@@ -8,8 +8,8 @@ It uses **Google Gemini** (free API) for dynamic AI responses and provides endpo
 ## 📘 Features
 - **Live AI responses** from Gemini
 - **Session management** (`start`, `end`)
-- **AI prompt handling** (`/api/ai/query`)
-- **MCP workflow simulation** (`/api/mcp/generate`, `/api/mcp/validate`)
+- **AI prompt handling** (`/api/query`)
+- **MCP workflow simulation** (`/api/generate`, `/api/validate`)
 
 - **Reusable Postman collection** for future automation & regression testing
 
@@ -56,12 +56,65 @@ Start the server:
 node server.js
 
 
-- -  How to Use Postman collection
+🧩 How to Import in Postman
+1️⃣ Import Collection
 
-- Open Postman
+--  Open Postman
 
-- Go to Environments → Import
+--  Click Import
 
-- Select this file:
---- postman/Agent-Api-Workflow-Collection.postman_collection.json
---- postman/Local Environment.postman_environment.json
+--  Select
+  postman/Agent-Api-Workflow-Collection-With-Testcases.postman_collection.json
+
+2️⃣ Import Environment
+
+--  Open Postman
+
+--  Click Environments → Import
+
+--  Select
+  postman/Local Environment.postman_environment.json
+
+3️⃣ Select Environment
+
+--  Click Top-Right Environment dropdown
+
+--  Choose: Local Environment
+
+📚 API Documentation in Postman
+
+-- Each request inside the collection already includes:
+
+✅ Request descriptions
+
+--  Explain:
+
+--  Purpose of the request
+
+--  Inputs required (e.g., session_id, prompt, task)
+
+--  Expected behavior
+
+You can view this via:
+
+Click a request → Right side panel → Documentation
+
+✅ Example request bodies
+
+- - To help you quickly run and test.
+
+✅ Response examples
+
+- - Shows what the API should return.
+
+✅ Test scripts
+
+- - Every request has automated Postman tests including:
+
+- - HTTP status validation
+
+- - JSON schema validation
+
+- - Field checks (session_id, output, message)
+
+- - Error handling tests (invalid/missing session ID)
